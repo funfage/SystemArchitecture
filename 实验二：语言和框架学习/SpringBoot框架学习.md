@@ -49,17 +49,33 @@
 
 ![image-20200426184601006](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426184601006.png)
 
+## 二、springboot整合mybatis
 
+### 1、引入数据库相关依赖
 
+![image-20200426213138560](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426213138560.png)
 
+### 2、mybatis相关配置
 
+（1）application.yml的配置如下
 
+![image-20200426213320983](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426213320983.png)
 
+（2）mybatis-config.xml的配置信息如下
 
+![image-20200426213726822](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426213726822.png)
 
+###  3、运行测试
 
+（1）编写测试类
 
+![image-20200426214138390](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426214138390.png)
 
+（2）运行测试类，并查看数据库是否添加了一条用户记录
+
+![image-20200426214232678](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426214232678.png)
+
+![image-20200426214400869](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426214400869.png)
 
 
 

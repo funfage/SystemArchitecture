@@ -77,6 +77,62 @@
 
 ![image-20200426214400869](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426214400869.png)
 
+## 三、结果集的封装
+
+### 1、错误码的枚举类
+
+~~~java
+@Getter
+public enum ResultError {
+    ;
+
+    //返回的错误码
+    private Integer code;
+
+    //返回的信息
+    private String message;
+
+    ResultError(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+}
+~~~
+
+### 2、返回结果封装
+
+~~~java
+@Getter
+public class ResultVo {
+
+    private Integer code;
+    private Boolean success;
+    private Object data;
+    private String message;
+
+    public static ResultVo success(Object data, String msg) {
+        return new ResultVo(0, true, data, msg);
+    }
+
+    public static ResultVo failure(ResultError error) {
+        return new ResultVo(error.getCode(), false, error.getMessage());
+    }
+
+    public ResultVo(Integer code, Boolean success, Object data, String msg) {
+        this.code = code;
+        this.success = success;
+        this.data = data;
+        this.message = msg;
+    }
+
+    public ResultVo(Integer code, Boolean success, String msg) {
+        this.code = code;
+        this.success = success;
+        this.message = msg;
+    }
+}
+~~~
+
 
 
 

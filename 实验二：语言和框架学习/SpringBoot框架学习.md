@@ -19,6 +19,52 @@
 
 # 实验内容
 
-1. 使用IDEA创建一个springboot工程
+## 一、 创建pringboot工程并运行
+
+* 新建项目选择Spring Initializer，接着选择jdk版本，点击Next
+
+![image-20200426182829779](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426182829779.png)
+
+* 填写项目元数据信息
+
+![image-20200426183924742](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426183924742.png)
+
+* 引入项目依赖，由于是web开发，所以选择spring web相关依赖
+
+![image-20200426184029198](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426184029198.png)
+
+* 选择项目名和项目保存的位置，点击finish即可创建项目
+
+![image-20200426184155904](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426184155904.png)
+
+* 项目的目录结构如下所示
+
+![image-20200426184402021](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426184402021.png)
+
+* 点击工具栏的运行即可启动项目
+
+![image-20200426184445295](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426184445295.png)
+
+* 查看日志信息，确认运行成功
+
+![image-20200426184601006](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200426184601006.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 实验总结

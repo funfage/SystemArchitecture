@@ -13,8 +13,8 @@ public class ResultVo {
 
     private String message;
 
-    public static ResultVo success(Object data, String msg) {
-        return new ResultVo(0, true, data, msg);
+    public static ResultVo success(Object data) {
+        return new ResultVo(0, true, data, "success");
     }
 
     public static ResultVo failure(ResultError error) {

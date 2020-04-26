@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ResultError {
-    ;
+    LOGIN_FAILURE(1, "用户名或密码错误");
 
     //返回的错误码
     private Integer code;

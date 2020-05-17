@@ -1,1 +1,2 @@
 the file of branch-2
+a new line

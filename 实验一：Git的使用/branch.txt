@@ -1,1 +1,1 @@
-the file of branch-1
+this file is merged

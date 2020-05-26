@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<studentList>
-    <student>
-        <sno>001</sno>
-        <sname>张三</sname>
-    </student>
-    <student>
-        <sno>002</sno>
-        <sname>李四</sname>
-    </student>
+<?xml version="1.0" encoding="UTF-8"?><studentList>
+<student>
+<sno>001</sno>
+<sname>张三</sname>
+</student>
+<student>
+<sno>002</sno>
+<sname>李四</sname>
+</student>
 </studentList>

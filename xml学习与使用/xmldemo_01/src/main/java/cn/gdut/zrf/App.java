@@ -143,8 +143,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        /*List<Student> studentsInfo = getStudentsInfo();
-        generateStuInfoToXml(studentsInfo);*/
+        List<Student> studentsInfo = getStudentsInfo();
+        generateStuInfoToXml(studentsInfo);
         readStuInfoFromXML();
     }
 }

@@ -1,2 +1,6 @@
-<h1>abc <H1> uvw </h1> xyz </h1>
-<h2> def <H2>
+<?xml version="1.0"?>
+<root>
+  <h1>abc </h1> 
+  <H1> uvw </H1>
+  <h2> def </h2>
+</root>

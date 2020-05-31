@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<my001:students
-        xmlns:my001="3117005006.gdut.edu.cn"
-        xmlns:my002="3117005006_2.gdut.edu.cn">
-    <my001:sno>001</my001:sno>
-    <my001:sname>张三</my001:sname>
-</my001:students>
+<students
+        xmlns="3117005006.gdut.edu.cn"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="3117005006.gdut.edu.cn E:\students.xsd">
+    <student>
+        <sname>张三</sname>
+        <sno>0001</sno>
+    </student>
+    <student>
+        <sname>李四</sname>
+        <sno>0002</sno>
+    </student>
+</students>

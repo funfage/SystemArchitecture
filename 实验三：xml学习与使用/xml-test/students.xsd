@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="3117005006.gdut.edu.cn"
+        xmlns:tns="3117005006.gdut.edu.cn"
+        elementFormDefault="qualified">
+    <xs:element name="students">
+        <!-- 定义复杂数据类型 -->
+        <xs:complexType>
+            <!-- 定义了一系列元素并且必须按照模式中定义的顺序显示  -->
+            <xs:sequence>
+                <!-- maxOccurs指定元素可以包含在元素中出现的最大次数 -->
+                <xs:element maxOccurs="unbounded" name="student">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <!-- type指定元素类型 -->
+                            <xs:element name="sname" type="xs:string" />
+                            <xs:element name="sno" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

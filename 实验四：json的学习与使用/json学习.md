@@ -8,7 +8,7 @@ Jackson官网教程：<https://github.com/FasterXML/jackson-docs>
 
 Baeldung Jackson JSON教程：<https://www.baeldung.com/jackson>
 
-### 注解说明
+### 基本注解说明以及示例
 
 官网说明：<https://www.baeldung.com/jackson-annotations>
 
@@ -18,10 +18,10 @@ Baeldung Jackson JSON教程：<https://www.baeldung.com/jackson>
 
 #### 属性命名
 
-- `JsonProperty`：用来表示外部属性名字，就是使用别名序列化，而不是对象的名字。当我们希望序列化后的属性名不是驼峰命名时可以用这个属性来指定序列化后的别名。或者是setter和getter方法的方法名不是标准的命名。
-+ `value`：指定使用的名字
-  + `index`：索引值，暂不知道用途
-+ `defaultValue`：指定默认值
+- `@JsonProperty`：用来表示外部属性名字，就是使用别名序列化，而不是对象的名字。当我们希望序列化后的属性名不是驼峰命名时可以用这个属性来指定序列化后的别名。或者是setter和getter方法的方法名不是标准的命名。该注解包含三个属性：
+  - `value`：指定使用的名字
+  - `index`：索引值，暂不知道用途
+  - `defaultValue`：指定默认值
 
 ```java
 public class MyBean {
@@ -633,3 +633,102 @@ public void whenSerializingUsingJsonRootName_thenCorrect()
 }
 ```
 
+#### 类型处理
+
+- `@JsonSubTypes`：指定注解类型的子类型
+- `@JsonTypeInfo`：指定属性序列化时需要包含的详细信息，相关的属性说明参考博客：[@JsonTypeInfo 多态类型处理](https://www.jianshu.com/p/a21f1633d79c)
+- `@JsonTypeName`：指定实体类序列化时的逻辑名称
+
+使用以上三种注解来序列化实体类Zoo，其中Zoo实体中又包含Dog实体和Cat实体。
+
+```java
+public class Zoo {
+    public Animal animal;
+ 
+    @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME, 
+      include = As.PROPERTY, 
+      property = "type")
+    @JsonSubTypes({
+        @JsonSubTypes.Type(value = Dog.class, name = "dog"),
+        @JsonSubTypes.Type(value = Cat.class, name = "cat")
+    })
+    public static class Animal {
+        public String name;
+    }
+ 
+    @JsonTypeName("dog")
+    public static class Dog extends Animal {
+        public double barkVolume;
+    }
+ 
+    @JsonTypeName("cat")
+    public static class Cat extends Animal {
+        boolean likesCream;
+        public int lives;
+    }
+}
+```
+
+序列化测试代码：
+
+```java
+@Test
+public void whenSerializingPolymorphic_thenCorrect()
+  throws JsonProcessingException {
+    Zoo.Dog dog = new Zoo.Dog("lacy");
+    Zoo zoo = new Zoo(dog);
+ 
+    String result = new ObjectMapper()
+      .writeValueAsString(zoo);
+ 
+    assertThat(result, containsString("type"));
+    assertThat(result, containsString("dog"));
+}
+```
+
+以下是Zoo和Dog实体一起序列化后的结果
+
+```json
+{
+    "animal": {
+        "type": "dog",
+        "name": "lacy",
+        "barkVolume": 0
+    }
+}
+```
+
+反序列化测试代码：
+
+输入的json数据：
+
+```json
+{
+    "animal":{
+        "name":"lacy",
+        "type":"cat"
+    }
+}
+```
+
+测试代码：
+
+```json
+@Test
+public void whenDeserializingPolymorphic_thenCorrect()
+throws IOException {
+    String json = "{\"animal\":{\"name\":\"lacy\",\"type\":\"cat\"}}";
+ 
+    Zoo zoo = new ObjectMapper()
+      .readerFor(Zoo.class)
+      .readValue(json);
+ 	//测试通过
+    assertEquals("lacy", zoo.animal.name);
+    assertEquals(Zoo.Cat.class, zoo.animal.getClass());
+}
+```
+
+### 高级注解说明以及示例
+
+参考网站：<https://www.baeldung.com/jackson-advanced-annotations>

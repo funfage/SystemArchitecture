@@ -14,7 +14,7 @@ public class RawBean {
 
     public String name;
 
-//    @JsonRawValue
+    @JsonRawValue
     public String json;
 
 }

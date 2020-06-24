@@ -1,0 +1,18 @@
+2020-06-24 22:51:31.436 ERROR [main]o.s.boot.diagnostics.LoggingFailureAnalysisReporter.report:40 -
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field logService in com.zrf.blog.aspect.RequestAspect required a bean of type 'com.zrf.blog.service.LogService' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.zrf.blog.service.LogService' in your configuration.
+

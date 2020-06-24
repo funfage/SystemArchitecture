@@ -1,22 +1,21 @@
-package com.zrf.blog.service;
+package com.zrf.blog.mapper;
 
 import com.zrf.blog.pojo.Log;
 import com.zrf.blog.utils.Page;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * <p>
- * 接口访问日志表服务层接口
+ * 接口访问日志表Mapper
  * </p>
  *
  * @author 张润发
  *
  */
-@Service
-public interface LogService {
+@Component
+public interface LogMapper {
 
     /**
      * 保存
@@ -29,7 +28,14 @@ public interface LogService {
      * @param page
      * @return
      */
-    Page<Log> getByPage(Page<Log> page);
+    List<Log> getByPage(Page<Log> page);
+
+    /**
+     * 查询总数
+     * @param page
+     * @return
+     */
+    int getCountByPage(Page<Log> page);
 
     /**
      * 根据id删除
@@ -38,14 +44,14 @@ public interface LogService {
     void deleteById(Integer id);
 
     /**
-     * 根据id集合删除
+     * 根据id列表删除
      * @param ids
      */
     void deleteByIds(List<Integer> ids);
 
     /**
-     * 查询数据，构建成workbook用于导出
+     * 查询全部
      * @return
      */
-    Workbook export();
+    List<Log> getAll();
 }

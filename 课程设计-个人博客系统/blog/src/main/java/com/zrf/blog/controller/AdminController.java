@@ -90,4 +90,21 @@ public class AdminController {
         return new Result<>("更新成功！");
     }
 
+    /**
+     * 更新密码
+     * @param admin
+     * @return
+     */
+    @PutMapping("/updatePassword")
+    public Result<Object> updatePassword(@RequestBody Admin admin) {
+        if (StringUtils.isBlank(admin.getPassword())) {
+            return new Result<>(ResultEnum.PARAMS_NULL.getCode(),
+                    "密码" + ResultEnum.PARAMS_NULL.getMsg());
+        }
+        adminService.updatePassword(admin);
+        return new Result<>("更新成功！");
+    }
+
+
+
 }

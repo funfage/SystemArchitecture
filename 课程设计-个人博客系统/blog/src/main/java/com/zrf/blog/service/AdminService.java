@@ -19,4 +19,10 @@ public interface AdminService {
      * @param admin
      */
     void updateInfo(Admin admin);
+
+    /**
+     * 修改密码
+     * @param admin
+     */
+    void updatePassword(Admin admin);
 }

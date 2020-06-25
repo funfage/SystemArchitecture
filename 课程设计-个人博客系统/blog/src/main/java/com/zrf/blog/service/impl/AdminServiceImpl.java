@@ -28,4 +28,11 @@ public class AdminServiceImpl implements AdminService {
         adminMapper.update(admin);
     }
 
+    @Override
+    public void updatePassword(Admin admin) {
+        Admin oldAdmin = adminMapper.getAdmin();
+        oldAdmin.setPassword(admin.getPassword());
+        adminMapper.update(oldAdmin);
+    }
+
 }

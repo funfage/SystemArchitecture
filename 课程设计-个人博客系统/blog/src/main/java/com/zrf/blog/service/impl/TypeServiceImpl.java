@@ -37,4 +37,14 @@ public class TypeServiceImpl implements TypeService {
     public List<Type> getTypeList() {
         return typeMapper.getTypeList();
     }
+
+    @Override
+    public void update(Type type) {
+        typeMapper.update(type);
+    }
+
+    @Override
+    public Type getById(Integer id) {
+        return typeMapper.getById(id);
+    }
 }

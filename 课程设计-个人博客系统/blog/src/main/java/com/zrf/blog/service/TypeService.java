@@ -27,4 +27,17 @@ public interface TypeService {
      * @return
      */
     List<Type> getTypeList();
+
+    /**
+     * 分类修改
+     * @param type
+     */
+    void update(Type type);
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    Type getById(Integer id);
 }

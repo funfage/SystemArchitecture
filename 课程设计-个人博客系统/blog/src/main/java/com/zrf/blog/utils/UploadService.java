@@ -33,7 +33,6 @@ public class UploadService {
         if (!uploadConfig.getAllowTypes().contains(contentType)) {
             throw new RuntimeException("文件类型不支持");
         }
-
         try {
             // 3、上传到FastDFS
             // 3.1、获取扩展名

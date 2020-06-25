@@ -6,6 +6,8 @@ import com.zrf.blog.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author 张润发
  * @date 2020/6/25
@@ -24,6 +26,21 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public void update(Link link) {
         linkMapper.update(link);
+    }
+
+    @Override
+    public Link getById(Integer id) {
+        return linkMapper.getById(id);
+    }
+
+    @Override
+    public List<Link> getAll() {
+        return linkMapper.getAll();
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        linkMapper.deleteById(id);
     }
 
 

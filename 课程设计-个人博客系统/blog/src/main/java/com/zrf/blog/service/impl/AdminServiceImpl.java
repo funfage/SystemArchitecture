@@ -1,6 +1,7 @@
 package com.zrf.blog.service.impl;
 
 import com.zrf.blog.mapper.AdminMapper;
+import com.zrf.blog.pojo.Admin;
 import com.zrf.blog.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminMapper adminMapper;
+
+    @Override
+    public Admin getAdmin() {
+        return adminMapper.getAdmin();
+    }
+
+    @Override
+    public void updateInfo(Admin admin) {
+        adminMapper.update(admin);
+    }
 
 }

@@ -6,15 +6,13 @@ import com.zrf.blog.pojo.Admin;
 import com.zrf.blog.service.AdminService;
 import com.zrf.blog.token.MyUsernamePasswordToken;
 import com.zrf.blog.utils.Result;
+import com.zrf.blog.utils.ShiroUtils;
 import com.zrf.blog.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -55,6 +53,41 @@ public class AdminController {
         Map<String, Object> returnMap = new HashMap<>(2);
         returnMap.put("token", sessionId);
         return new Result<>(returnMap);
+    }
+
+    /**
+     * 获取当前登录用户信息
+     * @return
+     */
+    @GetMapping("/info")
+    public Result<Admin> getLoginInfo() {
+        Admin admin = (Admin) ShiroUtils.getLoginUser();
+        admin.setPassword("");
+        return new Result<>(admin);
+    }
+
+    /**
+     * 查询管理员
+     * @return
+     */
+    @GetMapping("/getAdmin")
+    public Result<Object> getAdmin() {
+        Admin admin = adminService.getAdmin();
+        return new Result<>(admin);
+    }
+
+    /**
+     * 更新个人信息
+     * @param admin
+     * @return
+     */
+    @PutMapping("/updateInfo")
+    public Result<Object> updateInfo(@RequestBody Admin admin) {
+        if (admin.getId() == null) {
+            return new Result<>(ResultEnum.PARAMS_NULL, "id");
+        }
+        adminService.updateInfo(admin);
+        return new Result<>("更新成功！");
     }
 
 }

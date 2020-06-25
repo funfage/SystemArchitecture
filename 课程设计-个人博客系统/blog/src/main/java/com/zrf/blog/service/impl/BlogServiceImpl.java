@@ -8,10 +8,15 @@ import com.zrf.blog.pojo.Blog;
 import com.zrf.blog.pojo.Type;
 import com.zrf.blog.service.BlogService;
 import com.zrf.blog.utils.IdWorker;
+import com.zrf.blog.utils.Page;
+import com.zrf.blog.vo.BlogVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author 张润发
@@ -71,5 +76,38 @@ public class BlogServiceImpl implements BlogService {
             nowType.setTypeBlogCount(nowType.getTypeBlogCount() + 1);
             typeMapper.update(nowType);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public BlogVo readById(String id) {
+        Blog blog = blogMapper.getById(id);
+        // 阅读，需要更新阅读数
+        blog.setBlogRead(blog.getBlogRead() + 1);
+        blogMapper.update(blog);
+        // 将blog转为blogVo
+        BlogVo blogVo = new BlogVo();
+        BeanUtils.copyProperties(blog, blogVo);
+        // 查询分类
+        Type type = typeMapper.getById(blog.getBlogType());
+        blogVo.setTypeName(type.getTypeName());
+        return blogVo;
+    }
+
+    @Override
+    public void deleteById(String id) {
+        blogMapper.deleteById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Page<BlogVo> getByPage(Page<BlogVo> page) {
+        // 查询数据
+        List<BlogVo> blogVoList = blogMapper.getByPage(page);
+        page.setList(blogVoList);
+        // 查询总数
+        int totalCount = blogMapper.getCountByPage(page);
+        page.setTotalCount(totalCount);
+        return page;
     }
 }

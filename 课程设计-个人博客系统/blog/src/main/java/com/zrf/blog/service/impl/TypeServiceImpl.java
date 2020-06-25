@@ -7,6 +7,8 @@ import com.zrf.blog.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author 张润发
  * @date 2020/6/25
@@ -24,5 +26,15 @@ public class TypeServiceImpl implements TypeService {
             throw new BlogException("该分类已经存在");
         }
         typeMapper.insert(type);
+    }
+
+    @Override
+    public List<Type> getAll() {
+        return typeMapper.getAll();
+    }
+
+    @Override
+    public List<Type> getTypeList() {
+        return typeMapper.getTypeList();
     }
 }

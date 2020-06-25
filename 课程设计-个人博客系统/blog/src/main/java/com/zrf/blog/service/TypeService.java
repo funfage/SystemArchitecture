@@ -40,4 +40,22 @@ public interface TypeService {
      * @return
      */
     Type getById(Integer id);
+
+    /**
+     * 启用
+     * @param id
+     */
+    void enableById(Integer id);
+
+    /**
+     * 弃用
+     * @param id
+     */
+    void disableById(Integer id);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void deleteById(Integer id);
 }

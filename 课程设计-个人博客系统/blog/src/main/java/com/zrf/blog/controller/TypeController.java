@@ -82,4 +82,40 @@ public class TypeController {
         return new Result<>(type);
     }
 
+    /**
+     * 根据id启用
+     *
+     * @param id
+     * @return
+     */
+    @PutMapping("/enable/{id}")
+    public Result<Object> enable(@PathVariable @Min(value = 0, message = "id的值必须大于0！") Integer id) {
+        typeService.enableById(id);
+        return new Result<>("已启用！");
+    }
+
+    /**
+     * 根据id弃用
+     *
+     * @param id
+     * @return
+     */
+    @PutMapping("/disable/{id}")
+    public Result<Object> disable(@PathVariable @Min(value = 0, message = "id的值必须大于0！") Integer id) {
+        typeService.disableById(id);
+        return new Result<>("已弃用！");
+    }
+
+    /**
+     * 根据id删除
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete/{id}")
+    public Result<Object> delete(@PathVariable @Min(value = 0, message = "id的值必须大于0！") Integer id) {
+        typeService.deleteById(id);
+        return new Result<>("删除成功！");
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.zrf.blog.service.impl;
 
+import com.zrf.blog.enums.StateEnums;
 import com.zrf.blog.exception.BlogException;
 import com.zrf.blog.mapper.TypeMapper;
 import com.zrf.blog.pojo.Type;
@@ -47,4 +48,26 @@ public class TypeServiceImpl implements TypeService {
     public Type getById(Integer id) {
         return typeMapper.getById(id);
     }
+
+    @Override
+    public void enableById(Integer id) {
+        //先查再启用
+        Type type = typeMapper.getById(id);
+        type.setEnable(StateEnums.ENABLED.getCode());
+        typeMapper.update(type);
+    }
+
+    @Override
+    public void disableById(Integer id) {
+        //先查再启用
+        Type type = typeMapper.getById(id);
+        type.setEnable(StateEnums.NOT_ENABLED.getCode());
+        typeMapper.update(type);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        typeMapper.deleteById(id);
+    }
+
 }

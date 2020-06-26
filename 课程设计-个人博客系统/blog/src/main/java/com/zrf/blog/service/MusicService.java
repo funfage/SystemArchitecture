@@ -32,4 +32,16 @@ public interface MusicService {
      * @param id
      */
     void deleteById(Integer id);
+
+    /**
+     * 启用
+     * @param id
+     */
+    void enableById(Integer id);
+
+    /**
+     * 禁用
+     * @param id
+     */
+    void disableById(Integer id);
 }

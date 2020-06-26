@@ -68,4 +68,28 @@ public class MusicController {
         return new Result<>("删除成功！");
     }
 
+    /**
+     * 启用
+     *
+     * @param id
+     * @return
+     */
+    @PutMapping(value = "/enable/{id}")
+    public Result<Object> enable(@PathVariable Integer id) {
+        musicService.enableById(id);
+        return new Result<>("启用成功");
+    }
+
+    /**
+     * 弃用
+     *
+     * @param id
+     * @return
+     */
+    @PutMapping(value = "/disable/{id}")
+    public Result<Object> disable(@PathVariable Integer id) {
+        musicService.disableById(id);
+        return new Result<>("弃用成功");
+    }
+
 }

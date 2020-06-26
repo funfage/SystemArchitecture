@@ -1,6 +1,9 @@
 package com.zrf.blog.service;
 
 import com.zrf.blog.pojo.Music;
+import com.zrf.blog.utils.Page;
+
+import java.util.List;
 
 /**
  * @author 张润发
@@ -44,4 +47,17 @@ public interface MusicService {
      * @param id
      */
     void disableById(Integer id);
+
+    /**
+     * 分页查询
+     * @param page
+     * @return
+     */
+    Page<Music> getByPage(Page<Music> page);
+
+    /**
+     * 前台查询
+     * @return
+     */
+    List<Music> getList();
 }

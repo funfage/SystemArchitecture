@@ -1,13 +1,19 @@
 package com.zrf.blog.controller;
 
+import com.zrf.blog.enums.ResultEnum;
 import com.zrf.blog.group.Insert;
 import com.zrf.blog.group.Update;
 import com.zrf.blog.pojo.Music;
 import com.zrf.blog.service.MusicService;
+import com.zrf.blog.utils.Page;
 import com.zrf.blog.utils.Result;
+import com.zrf.blog.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author 张润发
@@ -90,6 +96,38 @@ public class MusicController {
     public Result<Object> disable(@PathVariable Integer id) {
         musicService.disableById(id);
         return new Result<>("弃用成功");
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @return
+     */
+    @PostMapping(value = "/getByPage")
+    public Result<Page<Music>> getByPage(@RequestBody Page<Music> page) {
+        String sortColumn = page.getSortColumn();
+        if (StringUtils.isNotBlank(sortColumn)) {
+            // 排序列不为空
+            String[] sortColumns = {"artist", "created_time", "enabled"};
+            List<String> sortList = Arrays.asList(sortColumns);
+            if (!sortList.contains(sortColumn.toLowerCase())) {
+                return new Result<>(ResultEnum.PARAMS_ERROR.getCode(), "排序参数不合法！");
+            }
+        }
+        page = musicService.getByPage(page);
+        return new Result<>(page);
+    }
+
+    /**
+     * 前台查询
+     *
+     * @return
+     */
+    @GetMapping(value = "/getList")
+    public Result<List<Music>> getList() {
+        List<Music> musicList = musicService.getList();
+        return new Result<>(musicList);
     }
 
 }

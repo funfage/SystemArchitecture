@@ -44,4 +44,28 @@ public class MusicController {
         return new Result<>("修改成功！");
     }
 
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/get/{id}")
+    public Result<Music> get(@PathVariable Integer id) {
+        Music music = musicService.getById(id);
+        return new Result<>(music);
+    }
+
+    /**
+     * 根据id删除
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value = "/delete/{id}")
+    public Result<Object> delete(@PathVariable Integer id) {
+        musicService.deleteById(id);
+        return new Result<>("删除成功！");
+    }
+
 }

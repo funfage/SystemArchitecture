@@ -19,4 +19,17 @@ public interface MusicService {
      * @param music
      */
     void update(Music music);
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    Music getById(Integer id);
+
+    /**
+     * 根据id删除
+     * @param id
+     */
+    void deleteById(Integer id);
 }

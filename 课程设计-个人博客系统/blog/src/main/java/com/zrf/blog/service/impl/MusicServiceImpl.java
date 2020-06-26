@@ -26,5 +26,13 @@ public class MusicServiceImpl implements MusicService {
         musicMapper.update(music);
     }
 
+    @Override
+    public Music getById(Integer id) {
+        return musicMapper.getById(id);
+    }
 
+    @Override
+    public void deleteById(Integer id) {
+        musicMapper.deleteById(id);
+    }
 }

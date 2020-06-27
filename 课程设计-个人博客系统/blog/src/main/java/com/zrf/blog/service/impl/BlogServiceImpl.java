@@ -110,4 +110,10 @@ public class BlogServiceImpl implements BlogService {
         page.setTotalCount(totalCount);
         return page;
     }
+
+    @Override
+    public List<BlogVo> getTimeLine() {
+        return blogMapper.getTimeLine();
+    }
+
 }

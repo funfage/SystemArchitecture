@@ -4,6 +4,8 @@ import com.zrf.blog.pojo.Blog;
 import com.zrf.blog.utils.Page;
 import com.zrf.blog.vo.BlogVo;
 
+import java.util.List;
+
 /**
  * @author 张润发
  * @date 2020/6/25
@@ -48,4 +50,10 @@ public interface BlogService {
      * @return
      */
     Page<BlogVo> getByPage(Page<BlogVo> page);
+
+    /**
+     * 查询时间轴
+     * @return
+     */
+    List<BlogVo> getTimeLine();
 }

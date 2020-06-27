@@ -7,6 +7,7 @@ import com.zrf.blog.exception.BlogException;
 import com.zrf.blog.mapper.BlogMapper;
 import com.zrf.blog.mapper.TypeMapper;
 import com.zrf.blog.pojo.Blog;
+import com.zrf.blog.pojo.BlogCollection;
 import com.zrf.blog.pojo.Type;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.BlogService;
@@ -17,6 +18,9 @@ import com.zrf.blog.vo.BlogVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -127,6 +131,47 @@ public class BlogServiceImpl implements BlogService {
         User user = (User) ShiroUtils.getLoginUser();
         int count = blogGoodsDao.countByUserIdAndBlogId(user.getUserId(), blogId);
         return count;
+    }
+
+    @Override
+    public void collectionByBlogId(BlogCollection blogCollection) {
+        User user = (User) ShiroUtils.getLoginUser();
+        blogCollection.setUserId(user.getUserId());
+        blogCollection.setUser(user);
+        // 查询博客
+        Blog blog = blogMapper.getById(blogCollection.getBlogId());
+        blog.setBlogContent(null);
+        blogCollection.setBlog(blog);
+
+        blog.setBlogCollection(blog.getBlogCollection() + 1);
+        blogMapper.update(blog);
+        try {
+            blogCollection.setCollectionId(idWorker.nextId() + "");
+            collectionDao.save(blogCollection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getCollectionCount(String blogId) {
+        User user = (User) ShiroUtils.getLoginUser();
+        int count = collectionDao.countByBlogIdAndUserId(blogId, user.getUserId());
+        return count;
+    }
+
+    @Override
+    public Page<BlogCollection> getCollectionByPage(Page<BlogCollection> page) {
+        User user = (User) ShiroUtils.getLoginUser();
+        BlogCollection blogCollection = new BlogCollection();
+        blogCollection.setUserId(user.getUserId());
+        Example example = Example.of(blogCollection);
+        Pageable pageable = PageRequest.of(page.getCurrentPage() - 1, page.getPageSize());
+        org.springframework.data.domain.Page p = collectionDao.findAll(example, pageable);
+        page.setTotalCount((int) p.getTotalElements());
+        page.setTotalPage(p.getTotalPages());
+        page.setList(p.getContent());
+        return page;
     }
 
 }

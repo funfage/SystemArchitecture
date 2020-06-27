@@ -1,6 +1,7 @@
 package com.zrf.blog.service;
 
 import com.zrf.blog.pojo.Blog;
+import com.zrf.blog.pojo.BlogCollection;
 import com.zrf.blog.utils.Page;
 import com.zrf.blog.vo.BlogVo;
 
@@ -63,4 +64,25 @@ public interface BlogService {
      * @return
      */
     int getGoodsCount(String blogId);
+
+    /**
+     * 收藏
+     * @param blogCollection
+     */
+    void collectionByBlogId(BlogCollection blogCollection);
+
+    /**
+     * 查询收藏数
+     * @param blogId
+     * @return
+     */
+    int getCollectionCount(String blogId);
+
+    /**
+     * 分页查询收藏
+     * @param page
+     * @return
+     */
+    Page<BlogCollection> getCollectionByPage(Page<BlogCollection> page);
+
 }

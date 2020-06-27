@@ -4,6 +4,7 @@ import com.zrf.blog.enums.ResultEnum;
 import com.zrf.blog.group.Insert;
 import com.zrf.blog.group.Update;
 import com.zrf.blog.pojo.Blog;
+import com.zrf.blog.pojo.BlogCollection;
 import com.zrf.blog.service.BlogService;
 import com.zrf.blog.utils.Page;
 import com.zrf.blog.utils.Result;
@@ -156,6 +157,42 @@ public class BlogController {
     public Result<Integer> getGood(@PathVariable String blogId) {
         int count = blogService.getGoodsCount(blogId);
         return new Result<>(count);
+    }
+
+    /**
+     * 收藏
+     * @param blogCollection
+     * @return
+     */
+    @RequestMapping(value = "/collection", method = RequestMethod.POST)
+    public Result<Object> collection(@RequestBody BlogCollection blogCollection) {
+        if(StringUtils.isBlank(blogCollection.getBlogId())) {
+            return new Result<>("博客id不能为空！");
+        }
+        blogService.collectionByBlogId(blogCollection);
+        return new Result<>("收藏成功！");
+    }
+
+    /**
+     * 根据博客id和当前登录用户查询收藏记录
+     * @param blogId
+     * @return
+     */
+    @RequestMapping(value = "/getCollection/{blogId}", method = RequestMethod.GET)
+    public Result<Integer> getCollection(@PathVariable String blogId) {
+        int count = blogService.getCollectionCount(blogId);
+        return new Result<>(count);
+    }
+
+    /**
+     * 分页查询我的收藏
+     * @param page
+     * @return
+     */
+    @RequestMapping(value = "/getCollectionList", method = RequestMethod.POST)
+    public Result<Page<BlogCollection>> getCollectionList(@RequestBody Page<BlogCollection> page) {
+        page = blogService.getCollectionByPage(page);
+        return new Result<>(page);
     }
 
     /**

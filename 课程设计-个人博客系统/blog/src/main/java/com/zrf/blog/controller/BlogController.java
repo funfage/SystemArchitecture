@@ -148,6 +148,17 @@ public class BlogController {
     }
 
     /**
+     * 根据博客id和当前登录用户查询点赞记录
+     * @param blogId
+     * @return
+     */
+    @RequestMapping(value = "/getGood/{blogId}", method = RequestMethod.GET)
+    public Result<Integer> getGood(@PathVariable String blogId) {
+        int count = blogService.getGoodsCount(blogId);
+        return new Result<>(count);
+    }
+
+    /**
      * 获取对应的timeLine
      * @param timeList
      * @param timeLineVo

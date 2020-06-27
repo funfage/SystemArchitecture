@@ -56,4 +56,11 @@ public interface BlogService {
      * @return
      */
     List<BlogVo> getTimeLine();
+
+    /**
+     * 根据博客id查询点赞数
+     * @param blogId
+     * @return
+     */
+    int getGoodsCount(String blogId);
 }

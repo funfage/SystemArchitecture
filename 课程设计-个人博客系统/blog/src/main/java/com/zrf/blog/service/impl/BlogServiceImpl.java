@@ -1,14 +1,18 @@
 package com.zrf.blog.service.impl;
 
+import com.zrf.blog.dao.BlogGoodsDao;
+import com.zrf.blog.dao.CollectionDao;
 import com.zrf.blog.enums.ResultEnum;
 import com.zrf.blog.exception.BlogException;
 import com.zrf.blog.mapper.BlogMapper;
 import com.zrf.blog.mapper.TypeMapper;
 import com.zrf.blog.pojo.Blog;
 import com.zrf.blog.pojo.Type;
+import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.BlogService;
 import com.zrf.blog.utils.IdWorker;
 import com.zrf.blog.utils.Page;
+import com.zrf.blog.utils.ShiroUtils;
 import com.zrf.blog.vo.BlogVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -28,12 +32,14 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private BlogMapper blogMapper;
-
-    @Autowired
-    private IdWorker idWorker;
-
     @Autowired
     private TypeMapper typeMapper;
+    @Autowired
+    private BlogGoodsDao blogGoodsDao;
+    @Autowired
+    private CollectionDao collectionDao;
+    @Autowired
+    private IdWorker idWorker;
 
 
     @Override
@@ -114,6 +120,13 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<BlogVo> getTimeLine() {
         return blogMapper.getTimeLine();
+    }
+
+    @Override
+    public int getGoodsCount(String blogId) {
+        User user = (User) ShiroUtils.getLoginUser();
+        int count = blogGoodsDao.countByUserIdAndBlogId(user.getUserId(), blogId);
+        return count;
     }
 
 }

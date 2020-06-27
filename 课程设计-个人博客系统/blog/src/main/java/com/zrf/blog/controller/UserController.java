@@ -119,6 +119,29 @@ public class UserController {
     }
 
     /**
+     * 重置密码
+     *
+     * @return
+     */
+    @PutMapping(value = "/resetPwd")
+    public Result<Object> resetPwd(@RequestBody List<Integer> userIds) {
+        if (userIds.size() <= 0) {
+            return new Result<>(ResultEnum.ERROR.getCode(), "请选择用户！");
+        }
+        userService.resetPwd(userIds);
+        return new Result<>("重置完毕！");
+    }
+
+    /**
+     * 注册
+     */
+    @PostMapping(value = "/register")
+    public Result<Object> register(@Validated({Insert.class}) @RequestBody User user) {
+        userService.register(user);
+        return new Result<>("注册成功！");
+    }
+
+    /**
      * 登录
      *
      * @param user

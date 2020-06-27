@@ -3,6 +3,8 @@ package com.zrf.blog.service;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.utils.Page;
 
+import java.util.List;
+
 /**
  * @author 张润发
  * @date 2020/6/27
@@ -52,4 +54,16 @@ public interface UserService {
      * @return
      */
     Page<User> getByPage(Page<User> page);
+
+    /**
+     * 重置密码
+     * @param userIds
+     */
+    void resetPwd(List<Integer> userIds);
+
+    /**
+     * 用户注册
+     * @param user
+     */
+    void register(User user);
 }

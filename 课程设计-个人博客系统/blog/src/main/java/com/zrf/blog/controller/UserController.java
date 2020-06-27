@@ -170,4 +170,14 @@ public class UserController {
         return new Result<>(returnMap);
     }
 
+    /**
+     * 查询当前用户的评论数和收藏数
+     * @return
+     */
+    @GetMapping(value = "/commentAndCollectionCount")
+    public Result<Map<String, Object>> commentAndCollectionCount() {
+        Map<String, Object> countMap = userService.getCommentAndCollectionCount();
+        return new Result<>(countMap);
+    }
+
 }

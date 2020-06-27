@@ -1,5 +1,7 @@
 package com.zrf.blog.service.impl;
 
+import com.zrf.blog.dao.CollectionDao;
+import com.zrf.blog.dao.CommentDao;
 import com.zrf.blog.enums.ResultEnum;
 import com.zrf.blog.exception.BlogException;
 import com.zrf.blog.mapper.UserMapper;
@@ -7,11 +9,14 @@ import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.UserService;
 import com.zrf.blog.utils.Md5Utils;
 import com.zrf.blog.utils.Page;
+import com.zrf.blog.utils.ShiroUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 张润发
@@ -23,6 +28,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CommentDao commentDao;
+    @Autowired
+    private CollectionDao collectionDao;
 
     @Override
     public User getByUsername(String username) {
@@ -90,6 +99,15 @@ public class UserServiceImpl implements UserService {
         // 如果不存在，插入数据
         userMapper.save(user);
     }
-
+    @Override
+    public Map<String, Object> getCommentAndCollectionCount() {
+        User user = (User) ShiroUtils.getLoginUser();
+        int commentCount = commentDao.countByCommentUser(user.getUserId());
+        int collectionCount = collectionDao.countByUserId(user.getUserId());
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("commentCount", commentCount);
+        map.put("collectionCount", collectionCount);
+        return map;
+    }
 
 }

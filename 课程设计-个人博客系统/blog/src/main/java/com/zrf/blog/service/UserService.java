@@ -4,6 +4,7 @@ import com.zrf.blog.pojo.User;
 import com.zrf.blog.utils.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 张润发
@@ -66,4 +67,10 @@ public interface UserService {
      * @param user
      */
     void register(User user);
+
+    /**
+     * 查询评论数和收藏数
+     * @return
+     */
+    Map<String, Object> getCommentAndCollectionCount();
 }

@@ -25,4 +25,11 @@ public interface AdminService {
      * @param admin
      */
     void updatePassword(Admin admin);
+
+    /**
+     * 根据用户名查询
+     * @param username
+     * @return
+     */
+    Admin getByUsername(String username);
 }

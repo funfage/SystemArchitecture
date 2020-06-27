@@ -1,12 +1,22 @@
 package com.zrf.blog.realm;
 
+import com.zrf.blog.enums.ResultEnum;
+import com.zrf.blog.enums.StateEnums;
+import com.zrf.blog.exception.BlogException;
+import com.zrf.blog.pojo.Admin;
+import com.zrf.blog.pojo.User;
+import com.zrf.blog.service.AdminService;
+import com.zrf.blog.service.UserService;
+import com.zrf.blog.token.MyUsernamePasswordToken;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 处理管理员的登录和授权逻辑
@@ -15,10 +25,10 @@ import org.apache.shiro.subject.PrincipalCollection;
  */
 public class AdminRealm extends AuthorizingRealm {
 
-   /* @Autowired
+    @Autowired
     private AdminService adminService;
     @Autowired
-    private UserService userService;*/
+    private UserService userService;
 
     /**
      * 授权方法
@@ -31,10 +41,6 @@ public class AdminRealm extends AuthorizingRealm {
         return new SimpleAuthorizationInfo();
     }
 
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        return null;
-    }
 
     /**
      * 认证
@@ -43,9 +49,9 @@ public class AdminRealm extends AuthorizingRealm {
      * @return
      * @throws AuthenticationException
      */
-    /*@Override
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
+        MyUsernamePasswordToken usernamePasswordToken = (MyUsernamePasswordToken) token;
         String username = usernamePasswordToken.getUsername();
         int state = usernamePasswordToken.getState();
         if (state == StateEnums.ADMIN.getCode()) {
@@ -62,5 +68,5 @@ public class AdminRealm extends AuthorizingRealm {
             }
             return new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
         }
-    }*/
+    }
 }

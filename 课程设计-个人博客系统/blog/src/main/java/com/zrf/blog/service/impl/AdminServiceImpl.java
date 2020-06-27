@@ -35,4 +35,10 @@ public class AdminServiceImpl implements AdminService {
         adminMapper.update(oldAdmin);
     }
 
+    @Override
+    public Admin getByUsername(String username) {
+        return adminMapper.getByUsername(username);
+    }
+
+
 }

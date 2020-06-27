@@ -13,4 +13,22 @@ public interface UserService {
      * @return
      */
     User getByUsername(String username);
+
+    /**
+     * 添加
+     * @param user
+     */
+    void save(User user);
+
+    /**
+     * 更新
+     * @param user
+     */
+    void update(User user);
+
+    /**
+     * 修改个人信息
+     * @param user
+     */
+    void updateInfo(User user);
 }

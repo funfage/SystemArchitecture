@@ -2,6 +2,8 @@ package com.zrf.blog.controller;
 
 import com.zrf.blog.enums.ResultEnum;
 import com.zrf.blog.enums.StateEnums;
+import com.zrf.blog.group.Insert;
+import com.zrf.blog.group.Update;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.UserService;
 import com.zrf.blog.token.MyUsernamePasswordToken;
@@ -11,10 +13,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -30,6 +30,45 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 保存
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping(value = "/save")
+    public Result<Object> save(@Validated({Insert.class}) @RequestBody User user) {
+        userService.save(user);
+        return new Result<>("添加成功！");
+    }
+
+    /**
+     * 更新
+     *
+     * @param user
+     * @return
+     */
+    @PutMapping(value = "/update")
+    public Result<Object> update(@Validated({Update.class}) @RequestBody User user) {
+        if (user.getVersion() == null) {
+            return new Result<>(ResultEnum.PARAMS_NULL, "version");
+        }
+        userService.update(user);
+        return new Result<>("修改成功！");
+    }
+
+    /**
+     * 修改个人信息
+     *
+     * @param user
+     * @return
+     */
+    @PutMapping(value = "/updateInfo")
+    public Result<Object> updateInfo(@Validated({Update.class}) @RequestBody User user) {
+        userService.updateInfo(user);
+        return new Result<>("修改成功！");
+    }
 
     /**
      * 登录

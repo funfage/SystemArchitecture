@@ -1,6 +1,7 @@
 package com.zrf.blog.service;
 
 import com.zrf.blog.pojo.User;
+import com.zrf.blog.utils.Page;
 
 /**
  * @author 张润发
@@ -31,4 +32,24 @@ public interface UserService {
      * @param user
      */
     void updateInfo(User user);
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    User getById(Integer id);
+
+    /**
+     * 根据id删除
+     * @param id
+     */
+    void deleteById(Integer id);
+
+    /**
+     * 分页查询
+     * @param page
+     * @return
+     */
+    Page<User> getByPage(Page<User> page);
 }

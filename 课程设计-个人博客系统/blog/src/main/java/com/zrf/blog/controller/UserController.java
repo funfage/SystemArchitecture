@@ -7,6 +7,7 @@ import com.zrf.blog.group.Update;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.UserService;
 import com.zrf.blog.token.MyUsernamePasswordToken;
+import com.zrf.blog.utils.Page;
 import com.zrf.blog.utils.Result;
 import com.zrf.blog.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -17,7 +18,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,6 +71,51 @@ public class UserController {
     public Result<Object> updateInfo(@Validated({Update.class}) @RequestBody User user) {
         userService.updateInfo(user);
         return new Result<>("修改成功！");
+    }
+
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/get/{id}")
+    public Result<User> get(@PathVariable Integer id) {
+        User user = userService.getById(id);
+        return new Result<>(user);
+    }
+
+    /**
+     * 根据id删除
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value = "/delete/{id}")
+    public Result<Object> delete(@PathVariable Integer id) {
+        userService.deleteById(id);
+        return new Result<>("删除成功！");
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @return
+     */
+    @PostMapping(value = "/getByPage")
+    public Result<Page<User>> getByPage(@RequestBody Page<User> page) {
+        String sortColumn = page.getSortColumn();
+        if (StringUtils.isNotBlank(sortColumn)) {
+            // 排序列不为空
+            String[] sortColumns = {"sex", "created_time", "update_time"};
+            List<String> sortList = Arrays.asList(sortColumns);
+            if (!sortList.contains(sortColumn.toLowerCase())) {
+                return new Result<>(ResultEnum.PARAMS_ERROR.getCode(), "排序参数不合法！");
+            }
+        }
+        page = userService.getByPage(page);
+        return new Result<>(page);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.zrf.blog.controller;
 
 import com.zrf.blog.enums.ResultEnum;
 import com.zrf.blog.pojo.Comment;
+import com.zrf.blog.pojo.CommentGoods;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.CommentService;
 import com.zrf.blog.utils.Result;
@@ -51,5 +52,33 @@ public class CommentController {
         List<Comment> comments = commentService.getByBlog(blogId);
         return new Result<>(comments);
     }
+
+    /**
+     * 根据id删除
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteById/{id}", method = RequestMethod.DELETE)
+    public Result<Object> deleteById(@PathVariable String id) {
+        commentService.deleteById(id);
+        return new Result<>("删除成功！");
+    }
+
+    /**
+     * 点赞
+     *
+     * @param commentGoods
+     * @return
+     */
+    @RequestMapping(value = "/good", method = RequestMethod.POST)
+    public Result<Object> good(@RequestBody CommentGoods commentGoods) {
+        if (StringUtils.isBlank(commentGoods.getCommentId())) {
+            return new Result<>("评论id不能为空！");
+        }
+        commentService.goodByCommentIdAndUser(commentGoods);
+        return new Result<>("点赞成功！");
+    }
+
 
 }

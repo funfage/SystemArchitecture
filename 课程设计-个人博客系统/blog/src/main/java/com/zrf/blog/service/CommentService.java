@@ -1,6 +1,7 @@
 package com.zrf.blog.service;
 
 import com.zrf.blog.pojo.Comment;
+import com.zrf.blog.pojo.CommentGoods;
 
 import java.util.List;
 
@@ -22,4 +23,16 @@ public interface CommentService {
      * @return
      */
     List<Comment> getByBlog(String blogId);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void deleteById(String id);
+
+    /**
+     * 点赞
+     * @param commentGoods
+     */
+    void goodByCommentIdAndUser(CommentGoods commentGoods);
 }

@@ -10,6 +10,7 @@ import com.zrf.blog.pojo.CommentGoods;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.CommentService;
 import com.zrf.blog.utils.IdWorker;
+import com.zrf.blog.utils.ShiroUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,28 @@ public class CommentServiceImpl implements CommentService {
             });
         });
         return commentList;
+    }
+
+    @Override
+    public void deleteById(String id) {
+        commentDao.deleteById(id);
+    }
+
+    @Override
+    public void goodByCommentIdAndUser(CommentGoods commentGoods) {
+        User user = (User) ShiroUtils.getLoginUser();
+        commentGoods.setUserId(user.getUserId());
+        // 取出评论id，点赞数+1
+        String commentId = commentGoods.getCommentId();
+        Comment comment = commentDao.findById(commentId).get();
+        comment.setCommentGood(comment.getCommentGood() + 1);
+        commentDao.save(comment);
+        try {
+            commentGoods.setId(idWorker.nextId() + "");
+            commentGoodsDao.save(commentGoods);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

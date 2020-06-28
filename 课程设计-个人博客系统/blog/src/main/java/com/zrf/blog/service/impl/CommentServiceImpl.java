@@ -10,9 +10,14 @@ import com.zrf.blog.pojo.CommentGoods;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.CommentService;
 import com.zrf.blog.utils.IdWorker;
+import com.zrf.blog.utils.Page;
 import com.zrf.blog.utils.ShiroUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -98,5 +103,45 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    @Override
+    public Page<Comment> getByPage(Page<Comment> page) {
+        User user = (User) ShiroUtils.getLoginUser();
+        Comment comment = new Comment();
+        comment.setCommentUser(user.getUserId());
+        Example<Comment> example = Example.of(comment);
+        Pageable pageable = PageRequest.of(page.getCurrentPage() - 1, page.getPageSize());
+        org.springframework.data.domain.Page<Comment> p = commentDao.findAll(example, pageable);
+        // 封装总页数、总条数、数据
+        page.setTotalCount((int)p.getTotalElements());
+        page.setTotalPage(p.getTotalPages());
+        page.setList(p.getContent());
+        return page;
+    }
+
+    @Override
+    public Page<Comment> getByPageBack(Page<Comment> page) {
+        Comment comment = new Comment();
+        String blogTitle = (String) page.getParams().get("blogTitle");
+        if(StringUtils.isBlank(blogTitle)) {
+            blogTitle = "";
+        }
+        String nickname = (String) page.getParams().get("nickname");
+        if(StringUtils.isBlank(nickname)) {
+            nickname = "";
+        }
+        Blog blog = new Blog();
+        blog.setBlogTitle(blogTitle);
+        comment.setBlog(blog);
+        User user = new User();
+        user.setNickname(nickname);
+        comment.setUser(user);
+        Pageable pageable = PageRequest.of(page.getCurrentPage() - 1, page.getPageSize());
+        org.springframework.data.domain.Page<Comment> p = commentDao.getByBlogTitleAndNickname(comment, pageable);
+        // 封装总页数、总条数、数据
+        page.setTotalCount((int)p.getTotalElements());
+        page.setTotalPage(p.getTotalPages());
+        page.setList(p.getContent());
+        return page;
+    }
 
 }

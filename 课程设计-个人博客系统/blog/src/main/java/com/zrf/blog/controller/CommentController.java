@@ -5,6 +5,7 @@ import com.zrf.blog.pojo.Comment;
 import com.zrf.blog.pojo.CommentGoods;
 import com.zrf.blog.pojo.User;
 import com.zrf.blog.service.CommentService;
+import com.zrf.blog.utils.Page;
 import com.zrf.blog.utils.Result;
 import com.zrf.blog.utils.ShiroUtils;
 import org.apache.commons.lang.StringUtils;
@@ -78,6 +79,29 @@ public class CommentController {
         }
         commentService.goodByCommentIdAndUser(commentGoods);
         return new Result<>("点赞成功！");
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @return
+     */
+    @RequestMapping(value = "/getList", method = RequestMethod.POST)
+    public Result<Page<Comment>> getList(@RequestBody Page<Comment> page) {
+        page = commentService.getByPage(page);
+        return new Result<>(page);
+    }
+
+    /**
+     * 后台分页查询
+     * @param page
+     * @return
+     */
+    @RequestMapping(value = "/getByPage", method = RequestMethod.POST)
+    public Result<Page<Comment>> getByPage(@RequestBody Page<Comment> page) {
+        page = commentService.getByPageBack(page);
+        return new Result<>(page);
     }
 
 

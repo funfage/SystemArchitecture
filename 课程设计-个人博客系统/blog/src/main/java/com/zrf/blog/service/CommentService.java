@@ -2,6 +2,7 @@ package com.zrf.blog.service;
 
 import com.zrf.blog.pojo.Comment;
 import com.zrf.blog.pojo.CommentGoods;
+import com.zrf.blog.utils.Page;
 
 import java.util.List;
 
@@ -35,4 +36,18 @@ public interface CommentService {
      * @param commentGoods
      */
     void goodByCommentIdAndUser(CommentGoods commentGoods);
+
+    /**
+     * 分页查询
+     * @param page
+     * @return
+     */
+    Page<Comment> getByPage(Page<Comment> page);
+
+    /**
+     * 后台分页查询
+     * @param page
+     * @return
+     */
+    Page<Comment> getByPageBack(Page<Comment> page);
 }
